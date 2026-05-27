@@ -1,25 +1,23 @@
-const express = require('express');
-const cors = require('cors');
+require("dotenv").config();
 
-// 1️⃣ Crear app PRIMERO
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+
+const authRoutes = require("./routes/auth");
+
 const app = express();
 
-// 2️⃣ Middlewares
 app.use(cors());
 app.use(express.json());
 
-// 3️⃣ Importar rutas
-const swapiRoutes = require('./routes/swapiRoutes')
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB conectado 🚀"))
+  .catch((err) => console.log(err));
 
-// 4️⃣ Usar rutas
-app.use('/api/swapi', swapiRoutes);
+app.use("/api/auth", authRoutes);
 
-// 5️⃣ Ruta de prueba
-app.get('/', (req, res) => {
-  res.send('API funcionando 🚀');
-});
-
-// 6️⃣ Levantar servidor
 app.listen(5000, () => {
-  console.log('Servidor en http://localhost:5000');
+  console.log("Servidor corriendo en puerto 5000");
 });
