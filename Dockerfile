@@ -14,7 +14,11 @@ RUN npm install --prefix frontend
 COPY backend ./backend
 COPY frontend ./frontend
 
-# Build del frontend con la URL hardcodeada
+# Pasar la URL como ARG para que React la incruste en el build
+ARG REACT_APP_API_URL=https://swapi-mern-production.up.railway.app
+ENV REACT_APP_API_URL=$REACT_APP_API_URL
+
+# Build del frontend
 RUN npm run build --prefix frontend
 
 EXPOSE 8080
