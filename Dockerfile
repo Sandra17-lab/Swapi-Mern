@@ -14,8 +14,11 @@ RUN npm install --prefix frontend
 COPY backend ./backend
 COPY frontend ./frontend
 
-# Forzar rebuild: v3
-RUN echo "build version 3" && npm run build --prefix frontend
+# Definir la URL de la API como variable de build para React
+ENV REACT_APP_API_URL=https://swapi-mern-production.up.railway.app
+
+# Build del frontend - React leerá REACT_APP_API_URL del ENV
+RUN npm run build --prefix frontend
 
 EXPOSE 8080
 
