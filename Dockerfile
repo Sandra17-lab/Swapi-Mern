@@ -11,6 +11,7 @@ RUN npm install --prefix frontend
 COPY backend ./backend
 COPY frontend ./frontend
 
+# Forzar rebuild del frontend
 RUN npm run build --prefix frontend
 
 EXPOSE 8080
