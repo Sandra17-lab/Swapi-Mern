@@ -36,17 +36,21 @@ const swapiRoutes = require('./routes/swapiRoutes');
 app.use('/api/auth', authRoutes);
 app.use('/api/swapi', swapiRoutes);
 
-// Servir frontend en producción
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/build')));
-
+// Servir frontend (siempre, en producción y desarrollo con build)
+const frontendBuild = path.join(__dirname, '../frontend/build');
+if (fs.existsSync(frontendBuild)) {
+  app.use(express.static(frontendBuild));
   app.use((req, res, next) => {
     if (!req.path.startsWith('/api')) {
-      res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+      res.sendFile(path.join(frontendBuild, 'index.html'));
     } else {
       next();
     }
   });
+  console.log('🌐 Sirviendo frontend desde:', frontendBuild);
+} else {
+  console.warn('⚠️  Build del frontend no encontrado en:', frontendBuild);
+  app.get('/', (req, res) => res.send('API corriendo. Frontend no disponible.'));
 }
 
 const PORT = process.env.PORT || 8080;
