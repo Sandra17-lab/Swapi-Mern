@@ -11,8 +11,7 @@ RUN npm install --prefix frontend
 COPY backend ./backend
 COPY frontend ./frontend
 
-# Cache bust: 4
-RUN echo "4" > /tmp/cachebust && npm run build --prefix frontend
+RUN npm run build --prefix frontend
 
 EXPOSE 8080
 
