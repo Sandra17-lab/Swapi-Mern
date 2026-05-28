@@ -14,9 +14,10 @@ RUN npm install --prefix backend
 COPY frontend ./frontend
 COPY backend ./backend
 
-# Build del frontend
+# Build del frontend (sin caché)
+ARG CACHEBUST=1
 RUN npm run build --prefix frontend
 
-EXPOSE 5000
+EXPOSE 8080
 
 CMD ["node", "backend/index.js"]
