@@ -38,6 +38,7 @@ app.use('/api/swapi', swapiRoutes);
 
 // Servir frontend (siempre, en producción y desarrollo con build)
 const frontendBuild = path.join(__dirname, '../frontend/build');
+console.log('🔍 Buscando frontend en:', frontendBuild);
 if (fs.existsSync(frontendBuild)) {
   app.use(express.static(frontendBuild));
   app.use((req, res, next) => {
