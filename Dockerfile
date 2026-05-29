@@ -11,7 +11,7 @@ RUN npm install --prefix frontend
 COPY backend ./backend
 COPY frontend ./frontend
 
-# Forzar rebuild del frontend
+# bust cache: 2026-05-28
 RUN npm run build --prefix frontend
 
 EXPOSE 8080
